@@ -413,11 +413,9 @@ filter() {
 	IFS="${OLDIFS}"
 	if [ "x${have_perl}" != "x" ]; then
 		( printf %s "${content}"; exec /bin/cat ) | \
-			sed -e 's/\[[^m]*m//g' "${@}" | \
 			perl -CIOL -pe 'no warnings "utf8"; s/.\010//g' >&2
 	else
 		( printf %s "${content}"; exec /bin/cat ) | \
-			sed -e 's/\[[^m]*m//g' "${@}" | \
 			sed -e 's/.//g' >&2
 	fi
 }
@@ -429,7 +427,7 @@ filter() {
 while [ $# -gt 0 ] ; do
         case "$1" in
                 "+G"|"+") vim_cmd="${vim_cmd} +"; shift ;;
-                    "-c") shift; extra_c="$1"; shift ;; 
+                    "-c") shift; extra_c="$1"; shift ;;
                       -*) echo "bad option '$1'" ; exit 1 ;;
                        *) break ;;
          esac
