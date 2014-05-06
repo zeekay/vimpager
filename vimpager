@@ -456,8 +456,14 @@ filter() {
 			nl=$((nl+(w-1)/dw))
 		done
 	fi
+
 	IFS="${OLDIFS}"
-	if [ "x${have_perl}" != "x" ]; then
+
+	# On OSX I don't need to strip ANSI color codes.
+	if [ "$(uname)" = "Darwin" ]; then
+		( printf %s "${content}"; exec /bin/cat ) | \
+			perl -CIOL -pe 'no warnings "utf8"; s/.\010//g' >&2
+	elif [ "x${have_perl}" != "x" ]; then
 		( printf %s "${content}"; exec /bin/cat ) | \
 			sed -e 's/^[\[[^m]*m//g' "${@}" | \
 			perl -CIOL -pe 'no warnings "utf8"; s/.\010//g' >&2
