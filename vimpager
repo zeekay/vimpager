@@ -465,11 +465,11 @@ filter() {
 			perl -CIOL -pe 'no warnings "utf8"; s/.\010//g' >&2
 	elif [ "x${have_perl}" != "x" ]; then
 		( printf %s "${content}"; exec /bin/cat ) | \
-			sed -e 's/^[\[[^m]*m//g' "${@}" | \
+			sed -e 's/\[[^m]*m//g' "${@}" | \
 			perl -CIOL -pe 'no warnings "utf8"; s/.\010//g' >&2
 	else
 		( printf %s "${content}"; exec /bin/cat ) | \
-			sed -e 's/^[\[[^m]*m//g' "${@}" | \
+			sed -e 's/\[[^m]*m//g' "${@}" | \
 			sed -e 's/.//g' >&2
 	fi
 }
