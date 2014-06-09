@@ -12,7 +12,8 @@ fi
 
 # try to find a better shell, especially on Solaris
 
-PATH=$PATH:/usr/local/bin:/opt/csw/bin:/opt/local/bin:/usr/dt/bin:/usr/xpg4/bin:/usr/bin:/bin
+# For some reason $PATH is borked in 10.10, moving /usr/local/bin up front manually for now.
+PATH=/usr/local/bin:$PATH:/usr/local/bin:/opt/csw/bin:/opt/local/bin:/usr/dt/bin:/usr/xpg4/bin:/usr/bin:/bin
 
 if [ -z "$IN_BASH" ] && command -v bash >/dev/null; then
 	IN_BASH=1
